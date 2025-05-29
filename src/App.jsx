@@ -11,7 +11,6 @@ import Header from './Header/Header';
 import Login from './Login/Login';
 
 function App() {
-
   return (
     <Router>
       <Header />
@@ -24,7 +23,7 @@ function App() {
         <Route path="/login" element={<Login />} />
       </Routes>
     </Router>
-  )
+  );
 }
 
 export default App;
