@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
-function BoardDetail() {
+function MyPage() {
   return (
     <div>
-      나의 글 화면 (준비 중)
+      <h1>개발중입니다</h1>
     </div>
   );
 }
 
-export default BoardDetail;
+export default MyPage; 
