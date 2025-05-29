@@ -8,6 +8,7 @@ function BoardWrite() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -20,22 +21,28 @@ function BoardWrite() {
     }
 
     try {
-      const response = await fetch('https://community-api.tapie.kr/board/posts', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          title,
-          content,
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || `게시글 작성에 실패했습니다. 상태: ${response.status}`);
+      // ✅ 로그인된 유저 가져오기
+      const user = JSON.parse(localStorage.getItem("loggedInUser"));
+      if (!user) {
+        throw new Error("로그인이 필요합니다.");
       }
 
+      // ✅ 기존 게시글 불러오기
+      const savedPosts = JSON.parse(localStorage.getItem("posts") || "[]");
+
+      // ✅ 새 게시글 생성
+      const newPost = {
+        id: Date.now(),
+        title,
+        content,
+        author: user.nickname,
+        date: new Date().toISOString().slice(0, 10) // "YYYY-MM-DD"
+      };
+
+      // ✅ 게시글 추가 후 저장
+      localStorage.setItem("posts", JSON.stringify([newPost, ...savedPosts]));
+
+      // ✅ 성공 시 메인 페이지로 이동
       navigate('/');
 
     } catch (e) {
@@ -69,7 +76,7 @@ function BoardWrite() {
             id="content"
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            placeholder="내용을 작성해주세요" 
+            placeholder="내용을 작성해주세요"
             rows="10"
             required
             disabled={loading}
@@ -79,7 +86,9 @@ function BoardWrite() {
         {error && <p className="error-message">{error.message}</p>}
 
         <div className="form-actions">
-          <button type="submit" className="submit-button" disabled={loading}>등록하기</button>
+          <button type="submit" className="submit-button" disabled={loading}>
+            등록하기
+          </button>
         </div>
       </form>
     </div>
