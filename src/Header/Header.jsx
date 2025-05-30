@@ -1,25 +1,25 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from '../Auth/AuthContext';
 import "./Header.css";
 
 function Header() {
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem("loggedInUser"));
+  const { loggedInUser, logout } = useAuth();
 
   const handleLogout = () => {
-    localStorage.removeItem("loggedInUser");
-    navigate("/login");
+    logout();
   };
 
   return (
     <header className="header">
       <div className="header-left">
-        <h1>TAPIE Board</h1>
+        <h1 onClick={() => navigate("/")}>TAPIE Board</h1>
       </div>
       <div className="header-right">
-        {user ? (
+        {loggedInUser ? (
           <>
-            <span className="nickname">{user.nickname}</span>
+            <span className="nickname">{loggedInUser.nickname}</span>
             <button className="logout-button" onClick={handleLogout}>로그아웃</button>
           </>
         ) : (

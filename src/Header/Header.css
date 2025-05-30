@@ -19,6 +19,7 @@
 
 .nickname {
   font-size: 1rem;
+  color: white;
 }
 
 .login-button {
@@ -28,6 +29,7 @@
   font-size: 1rem;
   border-radius: 8px;
 }
+
 .logout-button{
   background-color: #FFA4A4;
   color: black;

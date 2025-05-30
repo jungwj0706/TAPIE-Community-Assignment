@@ -1,95 +1,127 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../Auth/AuthContext';
 import './Login.css';
 
-function Login() {
-  const [isLogin, setIsLogin] = useState(true);
-  const [username, setUsername] = useState('');
-  const [nickname, setNickname] = useState('');
-  const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
-  const navigate = useNavigate();
+const Login = () => {
+   const { login, register } = useAuth();
 
-  const handleSignup = () => {
-    if (!username || !password || !nickname) {
-      setMessage("모든 정보를 입력해주세요.");
-      return;
-    }
-    const userData = { username, password, nickname };
-    localStorage.setItem("user", JSON.stringify(userData));
-    setMessage("회원가입 완료! 로그인 해주세요.");
-    setIsLogin(true);
-  };
+   const [loginUsername, setLoginUsername] = useState('');
+   const [loginPassword, setLoginPassword] = useState('');
+   const [registerUsername, setRegisterUsername] = useState('');
+   const [registerNickname, setRegisterNickname] = useState('');
+   const [registerPassword, setRegisterPassword] = useState('');
+   const [message, setMessage] = useState('');
 
-  const handleLogin = () => {
-    const saved = localStorage.getItem("user");
-    if (!saved) {
-      setMessage("회원가입된 정보가 없습니다.");
-      return;
-    }
+   const handleLogin = async (e) => {
+     e.preventDefault();
+     setMessage('');
+     const result = await login(loginUsername, loginPassword);
+     if (!result.success) {
+       setMessage(result.message);
+     }
+   };
 
-    const savedUser = JSON.parse(saved);
-    if (username === savedUser.username && password === savedUser.password) {
-      localStorage.setItem("loggedInUser", JSON.stringify(savedUser));
-      navigate("/");
-    } else {
-      setMessage("아이디 또는 비밀번호가 틀렸습니다.");
-    }
-  };
+   const handleRegister = async (e) => {
+     e.preventDefault();
+     setMessage('');
+     const result = await register(registerUsername, registerNickname, registerPassword);
+     if (result.success) {
+       setMessage('회원가입에 성공했습니다.');
+       setRegisterUsername('');
+       setRegisterNickname('');
+       setRegisterPassword('');
+     } else {
+       setMessage(result.message);
+     }
+   };
 
-  return (
-    <div className="login-wrapper">
-      <div className="card">
-        <h2>{isLogin ? "로그인" : "회원가입"}</h2>
+   return (
+     <div className="login-page">
+       <div className="login-card">
+         <h2 className="login-title">로그인</h2>
+         <form onSubmit={handleLogin} className="login-form">
+           <div className="form-group">
+             <label htmlFor="login-username" className="form-label">아이디</label>
+             <input
+               id="login-username"
+               type="text"
+               value={loginUsername}
+               onChange={(e) => setLoginUsername(e.target.value)}
+               required
+               className="form-input"
+               autoComplete="username"
+             />
+           </div>
+           <div className="form-group">
+             <label htmlFor="login-password" className="form-label">비밀번호</label>
+             <input
+               id="login-password"
+               type="password"
+               value={loginPassword}
+               onChange={(e) => setLoginPassword(e.target.value)}
+               required
+               className="form-input"
+               autoComplete="current-password"
+             />
+           </div>
+           <button type="submit" className="login-button">
+             로그인
+           </button>
+         </form>
+       </div>
 
-        <label>유저이름</label>
-        <input
-          type="text"
-          placeholder="아이디를 입력해주세요"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
+       <div className="register-card">
+         <h2 className="register-title">회원가입</h2>
+         <form onSubmit={handleRegister} className="register-form">
+           <div className="form-group">
+             <label htmlFor="register-username" className="form-label">아이디</label>
+             <input
+               id="register-username"
+               type="text"
+               value={registerUsername}
+               onChange={(e) => setRegisterUsername(e.target.value)}
+               required
+               className="form-input"
+               autoComplete="new-username"
+             />
+           </div>
+           <div className="form-group">
+             <label htmlFor="register-nickname" className="form-label">닉네임</label>
+             <input
+               id="register-nickname"
+               type="text"
+               value={registerNickname}
+               onChange={(e) => setRegisterNickname(e.target.value)}
+               required
+               className="form-input"
+               autoComplete="nickname"
+             />
+           </div>
+           <div className="form-group">
+             <label htmlFor="register-password" className="form-label">비밀번호</label>
+             <input
+               id="register-password"
+               type="password"
+               value={registerPassword}
+               onChange={(e) => setRegisterPassword(e.target.value)}
+               required
+               className="form-input"
+               autoComplete="new-password"
+             />
+           </div>
+           <button type="submit" className="register-button">
+             회원가입
+           </button>
+         </form>
+       </div>
+       {message && (
+         <div className="info-message">
+           {message}
+         </div>
+       )}
+     </div>
+   );
+ };
 
-        {!isLogin && (
-          <>
-            <label>닉네임</label>
-            <input
-              type="text"
-              placeholder="닉네임을 입력해주세요"
-              value={nickname}
-              onChange={(e) => setNickname(e.target.value)}
-            />
-          </>
-        )}
-
-        <label>비밀번호</label>
-        <input
-          type="password"
-          placeholder="비밀번호를 입력해주세요"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-
-        <button onClick={isLogin ? handleLogin : handleSignup}>
-          → {isLogin ? "로그인" : "회원가입"}
-        </button>
-
-        <div className="toggle">
-          <p onClick={() => {
-            setIsLogin(!isLogin);
-            setMessage('');
-            setUsername('');
-            setPassword('');
-            setNickname('');
-          }}>
-            {isLogin ? "회원가입 하러가기 →" : "← 로그인으로 돌아가기"}
-          </p>
-        </div>
-
-        {message && <p style={{ color: "#666", textAlign: "center" }}>{message}</p>}
-      </div>
-    </div>
-  );
-}
-
-export default Login;
+ export default Login;

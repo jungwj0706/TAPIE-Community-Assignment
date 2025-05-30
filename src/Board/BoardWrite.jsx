@@ -1,98 +1,99 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../Auth/AuthContext';
 import './BoardWrite.css';
 
-function BoardWrite() {
+const API_BASE_URL = 'https://community-api.tapie.kr';
+
+const BoardWrite = () => {
+  const navigate = useNavigate();
+  const { loggedInUser } = useAuth();
+
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
     setError(null);
 
-    if (!title.trim() || !content.trim()) {
-      setError(new Error('제목과 내용을 모두 입력해주세요.'));
-      setLoading(false);
+    if (!loggedInUser) {
+      setError('로그인된 사용자만 글을 작성할 수 있습니다.');
       return;
     }
 
     try {
-      // ✅ 로그인된 유저 가져오기
-      const user = JSON.parse(localStorage.getItem("loggedInUser"));
-      if (!user) {
-        throw new Error("로그인이 필요합니다.");
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${API_BASE_URL}/board/posts`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({ title, content }),
+      });
+
+      if (response.ok) {
+        const newPost = await response.json();
+        alert('게시글이 성공적으로 작성되었습니다.');
+        navigate(`/board/${newPost.id}`);
+      } else {
+        const errorData = await response.json();
+        setError(errorData.message || '게시글 작성에 실패했습니다.');
       }
-
-      // ✅ 기존 게시글 불러오기
-      const savedPosts = JSON.parse(localStorage.getItem("posts") || "[]");
-
-      // ✅ 새 게시글 생성
-      const newPost = {
-        id: Date.now(),
-        title,
-        content,
-        author: user.nickname,
-        date: new Date().toISOString().slice(0, 10) // "YYYY-MM-DD"
-      };
-
-      // ✅ 게시글 추가 후 저장
-      localStorage.setItem("posts", JSON.stringify([newPost, ...savedPosts]));
-
-      // ✅ 성공 시 메인 페이지로 이동
-      navigate('/');
-
-    } catch (e) {
-      setError(e);
-      console.error('게시글 작성 중 오류가 발생했습니다: ', e);
-      alert(`게시글 작성에 실패했습니다: ${e.message}`);
-    } finally {
-      setLoading(false);
+    } catch (err) {
+      setError('네트워크 오류: 게시글을 작성할 수 없습니다.');
+      console.error(err);
     }
   };
 
+  if (!loggedInUser) {
+    return (
+      <div className="center-message">
+        <p>글을 작성하려면 로그인해야 합니다.</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="board-write-container">
-      <h2>글 작성</h2>
-      <form onSubmit={handleSubmit} className="write-form">
-        <div className="form-group">
-          <label htmlFor="title">제목</label>
-          <input
-            type="text"
-            id="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="제목을 입력해주세요"
-            required
-            disabled={loading}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="content">내용</label>
-          <textarea
-            id="content"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            placeholder="내용을 작성해주세요"
-            rows="10"
-            required
-            disabled={loading}
-          ></textarea>
-        </div>
-
-        {error && <p className="error-message">{error.message}</p>}
-
-        <div className="form-actions">
-          <button type="submit" className="submit-button" disabled={loading}>
+    <div className="page-container">
+      <div className="content-card">
+        <h2 className="card-title">글 작성</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="title" className="label-hidden">제목</label>
+            <input
+              id="title"
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="제목"
+              required
+              className="input-field"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="content" className="label-hidden">내용</label>
+            <textarea
+              id="content"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              placeholder="내용을 작성해주세요"
+              required
+              className="textarea-field"
+            ></textarea>
+          </div>
+          {error && <p className="error-message">{error}</p>}
+          <button type="submit" className="submit-button">
+            <svg className="button-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l.649-.186.936-2.428 1.498 1.498 1.054-.367L10 15.688l-1.895-.895 2.146-5.596 1.502 1.502.936-2.428.649-.186a1 1 0 001.169 1.409l-7 14z"></path>
+            </svg>
             등록하기
           </button>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
-}
+};
 
 export default BoardWrite;
