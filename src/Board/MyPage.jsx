@@ -21,12 +21,10 @@ const MyPage = ({ setPage, setSelectedPostId }) => {
       }
 
       try {
-        const token = localStorage.getItem('token');
         const response = await fetch(`${API_BASE_URL}/board/posts`, {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-          },
+          credentials: 'include',
         });
+
         if (response.ok) {
           const allPosts = await response.json();
           const filteredPosts = allPosts.filter(
@@ -35,18 +33,22 @@ const MyPage = ({ setPage, setSelectedPostId }) => {
           filteredPosts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
           setMyPosts(filteredPosts);
         } else {
-          setError('내 게시글을 불러오는데 실패했습니다.');
+          if (response.status === 401) {
+            setError('인증 오류: 로그인 세션이 만료되었거나 유효하지 않습니다. 다시 로그인해주세요.');
+          } else {
+            setError('내 게시글을 불러오는데 실패했습니다.');
+          }
         }
       } catch (err) {
         setError('네트워크 오류: 내 게시글을 불러올 수 없습니다.');
-        console.error(err);
+        console.error('MyPage fetchMyPosts 오류:', err);
       } finally {
         setLoading(false);
       }
     };
 
     fetchMyPosts();
-  }, [loggedInUser]);
+  }, [loggedInUser]); 
 
   const handleEditClick = (e, postId) => {
     e.stopPropagation();
@@ -64,18 +66,19 @@ const MyPage = ({ setPage, setSelectedPostId }) => {
     if (!postToDelete) return;
 
     try {
-      const token = localStorage.getItem('token');
       const response = await fetch(`${API_BASE_URL}/board/posts/${postToDelete}`, {
         method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
+        credentials: 'include',
       });
       if (response.ok) {
         setMyPosts(myPosts.filter(post => post.id !== postToDelete));
         alert('게시글이 성공적으로 삭제되었습니다.');
       } else {
-        alert('게시글 삭제에 실패했습니다.');
+        if (response.status === 401) {
+            alert('인증 오류: 로그인 세션이 만료되었거나 유효하지 않습니다. 다시 로그인해주세요.');
+        } else {
+            alert('게시글 삭제에 실패했습니다.');
+        }
       }
     } catch (err) {
       console.error('게시글 삭제 오류:', err);
@@ -105,9 +108,6 @@ const MyPage = ({ setPage, setSelectedPostId }) => {
           onClick={() => setPage('boardWrite')}
           className="mypage-write-btn"
         >
-          <svg className="mypage-write-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zm-3.586 3.586l-7.5 7.5V17h2.328l7.5-7.5-2.328-2.328z"></path>
-          </svg>
           글 작성하기
         </button>
         <p className="mypage-post-count">
@@ -141,18 +141,12 @@ const MyPage = ({ setPage, setSelectedPostId }) => {
                   className="mypage-action-btn mypage-edit-btn"
                   title="수정"
                 >
-                  <svg className="mypage-action-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zm-3.586 3.586l-7.5 7.5V17h2.328l7.5-7.5-2.328-2.328z"></path>
-                  </svg>
                 </button>
                 <button
                   onClick={(e) => handleDeleteClick(e, post.id)}
                   className="mypage-action-btn mypage-delete-btn"
                   title="삭제"
                 >
-                  <svg className="mypage-action-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd"></path>
-                  </svg>
                 </button>
               </div>
             </div>

@@ -24,7 +24,6 @@ function Header() {
           </>
         ) : (
           <button className="login-button" onClick={() => navigate("/login")}>
-            → 로그인
           </button>
         )}
       </div>

@@ -23,13 +23,12 @@ const BoardWrite = () => {
     }
 
     try {
-      const token = localStorage.getItem('token');
       const response = await fetch(`${API_BASE_URL}/board/posts`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
         },
+        credentials: 'include',
         body: JSON.stringify({ title, content }),
       });
 
@@ -39,11 +38,16 @@ const BoardWrite = () => {
         navigate(`/board/${newPost.id}`);
       } else {
         const errorData = await response.json();
+        console.error('게시글 작성 실패 서버 응답:', response.status, errorData);
         setError(errorData.message || '게시글 작성에 실패했습니다.');
+        if (response.status === 401) {
+            alert('로그인 세션이 만료되었습니다. 다시 로그인해주세요.');
+            navigate('/login');
+        }
       }
     } catch (err) {
       setError('네트워크 오류: 게시글을 작성할 수 없습니다.');
-      console.error(err);
+      console.error('게시글 작성 중 네트워크 오류:', err);
     }
   };
 

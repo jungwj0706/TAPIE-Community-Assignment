@@ -71,9 +71,6 @@ function MainBoard() {
                             className={`write-button ${!loggedInUser ? 'write-button--disabled' : ''}`}
                             onClick={handleWriteButtonClick}
                         >
-                            <svg className="icon-pencil" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zm-3.586 3.586l-7.5 7.5V17h2.328l7.5-7.5-2.328-2.328z"></path>
-                            </svg>
                             글 작성하기
                         </Link>
                         <p className="post-count">

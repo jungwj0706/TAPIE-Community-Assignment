@@ -1,17 +1,13 @@
-/* src/Board/MyPage.css */
 .mypage-container {
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
   padding: 1.5rem;
-  background-color: #000; /* black */
-  min-height: calc(100vh - 100px - 32px); /* 헤더, main padding-top 제외 */
+  background-color: #000; 
+  min-height: calc(100vh - 100px - 32px);
   border-radius: 0.5rem;
-  border: 2px solid #1e40af; /* border-blue-800 */
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
 }
 
-/* 상단 액션 영역 (MainBoard와 동일하게) */
 .mypage-header-actions {
   display: flex;
   justify-content: space-between;
@@ -22,107 +18,80 @@
 .mypage-write-btn {
   display: flex;
   align-items: center;
-  gap: 0.5rem; /* space-x-2 */
-  background-color: #3b82f6; /* bg-blue-500 */
+  gap: 0.5rem; 
+  background-color: #A2D4FF;
   color: #fff;
-  font-weight: 600; /* font-semibold */
-  padding: 0.5rem 1rem; /* py-2 px-4 */
-  border-radius: 0.5rem; /* rounded-lg */
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); /* shadow-md */
-  transition: all 0.3s ease; /* transition duration-300 */
-}
-
-.mypage-write-btn:hover {
-  background-color: #2563eb; /* hover:bg-blue-600 */
-}
-
-.mypage-write-icon {
-  width: 1.25rem; /* w-5 */
-  height: 1.25rem; /* h-5 */
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
 }
 
 .mypage-post-count {
-  color: #d1d5db; /* text-gray-300 */
-  font-size: 1.125rem; /* text-lg */
+  color: #707070;
+  font-size: 1.125rem;
 }
 
 .mypage-post-count-num {
-  font-weight: 700; /* font-bold */
+  font-weight: 700;
 }
 
-/* 탭 메뉴 (MainBoard와 동일하게) */
 .mypage-tabs {
   display: flex;
-  border-bottom: 1px solid #374151; /* border-b border-gray-700 */
+  border-bottom: 1px solid #374151;
   margin-bottom: 2rem;
 }
 
 .mypage-tab-btn {
-  padding: 0.5rem 1.5rem; /* py-2 px-6 */
-  font-size: 1.125rem; /* text-lg */
-  font-weight: 600; /* font-semibold */
-  transition: all 0.3s ease; /* transition duration-300 */
-  color: #6b7280; /* text-gray-500 */
+  padding: 0.5rem 1.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  transition: all 0.3s ease; 
+  color: #565656; 
 }
 
-.mypage-tab-btn--active {
-  color: #60a5fa; /* text-blue-400 */
-  border-bottom: 2px solid #60a5fa; /* border-b-2 border-blue-400 */
-}
-
-.mypage-tab-btn--inactive:hover {
-  color: #d1d5db; /* hover:text-gray-300 */
-}
-
-/* 게시글 그리드 및 카드 (MainBoard와 유사하지만 버튼 추가) */
 .mypage-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* 4열로 조정 */
-  gap: 1.5rem; /* gap-6 */
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
 }
 
 .mypage-post-card {
-  background-color: #1f2937; /* bg-gray-800 */
-  padding: 1.25rem; /* p-5 */
-  border-radius: 0; /* 각진 모서리 */
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1); /* shadow-lg */
+  background-color: #1f2937;
+  padding: 1.25rem;
+  border-radius: 0; 
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
   transform: scale(1);
   transition: all 0.3s ease;
   cursor: pointer;
-  border: 1px solid #374151; /* border border-gray-700 */
+  border: 1px solid #374151;
   position: relative;
-  text-align: left; /* 텍스트 왼쪽 정렬 */
-  overflow: hidden; /* 내용이 넘치면 숨김 */
-}
-
-.mypage-post-card:hover {
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1); /* hover:shadow-xl */
-  transform: scale(1.05); /* hover:scale-105 */
+  text-align: left;
+  overflow: hidden;
 }
 
 .mypage-post-card__title {
-  font-size: 1.25rem; /* text-xl */
-  font-weight: 700; /* font-bold */
-  color: #93c5fd; /* text-blue-300 */
-  margin-bottom: 0.5rem; /* mb-2 */
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #93c5fd;
+  margin-bottom: 0.5rem;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; /* truncate */
-  padding-right: 4rem; /* 버튼 공간 확보 */
+  text-overflow: ellipsis;
+  padding-right: 4rem;
 }
 
 .mypage-post-card__date {
-  color: #6b7280; /* text-gray-500 */
-  font-size: 0.875rem; /* text-sm */
-  margin-bottom: 0.25rem; /* mb-1 */
+  color: #6b7280;
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
 }
 
 .mypage-post-card__content {
-  color: #e5e7eb; /* text-gray-200 */
-  font-size: 0.95rem; /* text-base */
-  line-height: 1.5; /* leading-relaxed */
+  color: #e5e7eb;
+  font-size: 0.95rem;
+  line-height: 1.5;
   display: -webkit-box;
-  -webkit-line-clamp: 3; /* 최대 3줄 표시 */
+  -webkit-line-clamp: 7;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -130,48 +99,40 @@
 
 .mypage-post-card__actions {
   position: absolute;
-  top: 1rem; /* top-4 */
-  right: 1rem; /* right-4 */
+  top: 1rem;
+  right: 1rem;
   display: flex;
-  gap: 0.5rem; /* space-x-2 */
+  gap: 0.5rem;
 }
 
 .mypage-action-btn {
-  width: 2rem; /* w-8 */
-  height: 2rem; /* h-8 */
+  width: 2rem;
+  height: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 9999px; /* rounded-full */
-  transition: all 0.2s ease; /* transition duration-200 */
+  border-radius: 9999px;
+  transition: all 0.2s ease; 
 }
 
 .mypage-edit-btn {
-  background-color: #3b82f6; /* bg-blue-500 */
+  background-color: #5ce1ff;
   color: #fff;
-}
-
-.mypage-edit-btn:hover {
-  background-color: #2563eb; /* hover:bg-blue-600 */
 }
 
 .mypage-delete-btn {
-  background-color: #ef4444; /* bg-red-500 */
-  color: #fff;
-}
-
-.mypage-delete-btn:hover {
-  background-color: #dc2626; /* hover:bg-red-600 */
+  background-color: red;
+  color: white;
 }
 
 .mypage-action-icon {
-  width: 1rem; /* w-4 */
-  height: 1rem; /* h-4 */
+  width: 1rem;
+  height: 1rem;
 }
 
 .mypage-no-posts {
   text-align: center;
-  color: #9ca3af; /* text-gray-400 */
-  font-size: 1.125rem; /* text-lg */
-  margin-top: 2rem; /* mt-8 */
+  color: #9ca3af;
+  font-size: 1.125rem;
+  margin-top: 2rem;
 }
