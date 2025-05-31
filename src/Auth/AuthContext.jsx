@@ -78,6 +78,8 @@ export const AuthProvider = ({ children }) => {
       });
 
       if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem('token', data.token);
         return { success: true, message: '회원가입에 성공했습니다.' };
       } else {
         const errorData = await response.json();

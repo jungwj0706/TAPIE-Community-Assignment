@@ -23,14 +23,27 @@
 }
 
 .login-button {
+  width: 120px;
+  height: 44px;
   background-color: white;
-  color: black;
   padding: 8px 16px;
   font-size: 1rem;
   border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: bold;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.login-button .fa-solid,
+.login-button .button-text {
+    color: black; 
 }
 
 .logout-button{
+  width: 134px;
+  height: 44px;
   background-color: #FFA4A4;
   color: black;
   padding: 8px 16px;
@@ -38,5 +51,7 @@
   border-radius: 8px;
 }
 
-
-
+.logout-button .fa-solid,
+.logout-button .button-text {
+    color: black;
+}

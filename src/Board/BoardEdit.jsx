@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../Auth/AuthContext';
 import './BoardEdit.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPen } from '@fortawesome/free-solid-svg-icons';
 
 const API_BASE_URL = 'https://community-api.tapie.kr';
 
@@ -101,7 +103,7 @@ const BoardEdit = () => {
   }
 
   if (!isAuthor && !loading && !error) {
-    return <div className="app-message app-error-message">이 게시글을 수정할 권한이 없습니다. (자동 이동)</div>;
+    return <div className="app-message app-error-message">이 게시글을 수정할 권한이 없습니다.</div>;
   }
 
 
@@ -132,9 +134,7 @@ const BoardEdit = () => {
             ></textarea>
           </div>
           <button type="submit" className="board-edit-button">
-            <svg className="board-edit-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zm-3.586 3.586l-7.5 7.5V17h2.328l7.5-7.5-2.328-2.328z"></path>
-            </svg>
+            <FontAwesomeIcon icon={faPen} />
             수정하기
           </button>
         </form>

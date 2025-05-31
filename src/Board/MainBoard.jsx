@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from '../Auth/AuthContext';
 import './MainBoard.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPen } from '@fortawesome/free-solid-svg-icons';
 
 function MainBoard() {
     const [posts, setPosts] = useState([]);
@@ -27,7 +29,7 @@ function MainBoard() {
                 const data = await response.json();
                 data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
                 setPosts(data);
-                console.log('MainBoard - Fetched All Posts:', data); // **로그 추가**
+                console.log('MainBoard - Fetched All Posts:', data);
             } catch (e) {
                 setError(e);
                 console.error("게시물을 불러오는데 실패했습니다.", e);
@@ -42,7 +44,6 @@ function MainBoard() {
         ? posts
         : posts.filter(post => {
             const isMyPost = post.author && loggedInUser && post.author.username === loggedInUser.username;
-            // **디버깅을 위한 로그 추가: 각 게시물의 author.username과 로그인된 사용자의 username 비교**
             if (activeTab === 'my' && post.author && loggedInUser) {
                 console.log(`Comparing post author: ${post.author.username} with loggedInUser: ${loggedInUser.username} -> Match: ${isMyPost}`);
             }
@@ -62,7 +63,7 @@ function MainBoard() {
 
     const displayPostCountText = () => {
         if (activeTab === 'all') {
-            return `전체 글 ${posts.length}개`;
+            return `전체 글 ${posts.length}개 작성됨`;
         } else if (activeTab === 'my' && loggedInUser) {
             return `나의 글 ${myPostsTotalCount}개 작성됨`;
         }
@@ -86,35 +87,36 @@ function MainBoard() {
                             className={`write-button ${!loggedInUser ? 'write-button--disabled' : ''}`}
                             onClick={handleWriteButtonClick}
                         >
-                            글 작성하기
+                            <FontAwesomeIcon icon={faPen} />
+                            <span className="button-text"> 글 작성하기</span>
                         </Link>
                         <p className="post-count">
                             {displayPostCountText()}
                         </p>
                     </div>
                 </div>
-
-                <div className="tabs">
-                    <button
-                        className={`tab-button ${activeTab === 'all' ? 'active' : ''}`}
-                        onClick={() => setActiveTab('all')}>
-                        전체
-                    </button>
-                    {loggedInUser && (
+                {loggedInUser && (
+                    <div className="tabs">
                         <button
-                            className={`tab-button ${activeTab === 'my' ? 'active' : ''}`}
-                            onClick={() => {
-                                setActiveTab('my');
-                            }}>
-                            나의 글
+                            className={`tab-button ${activeTab === 'all' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('all')}>
+                            전체
                         </button>
-                    )}
-                </div>
+                        {loggedInUser && (
+                            <button
+                                className={`tab-button ${activeTab === 'my' ? 'active' : ''}`}
+                                onClick={() => {
+                                    setActiveTab('my');
+                                }}>
+                                나의 글
+                            </button>
+                        )}
+                    </div>
+                )}
 
                 <ul className="board-grid-card-list">
                     {filteredPosts.length > 0 ? (
                         filteredPosts.map(post => (
-                            // <li> 태그에 board-card-item 클래스를 적용 (이전 오류 해결)
                             <li key={post.id} className="board-card-item">
                                 <Link to={`/board/${post.id}`} style={{ textDecoration: 'none', color: 'inherit', display: 'flex', flexDirection: 'column', height: '100%' }}>
                                     <h3 className="card-title">{post.title}</h3>

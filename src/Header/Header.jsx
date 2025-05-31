@@ -2,6 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../Auth/AuthContext';
 import './Header.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons'; 
+import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 
 function Header() {
   const { loggedInUser, logout } = useAuth();
@@ -20,11 +23,13 @@ function Header() {
           <>
             <span className="nickname">{loggedInUser.nickname || loggedInUser.username}님</span>
             <button onClick={handleLogout} className="logout-button">
-              로그아웃
+              <FontAwesomeIcon icon={faRightFromBracket} />
+              <span className="button-text"> 로그아웃</span>
             </button>
           </>
         ) : (
           <Link to="/login" className="login-button">
+            <FontAwesomeIcon icon={faRightToBracket} />
             로그인
           </Link>
         )}

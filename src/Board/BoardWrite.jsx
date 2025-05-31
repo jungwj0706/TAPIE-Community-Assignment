@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../Auth/AuthContext';
 import './BoardWrite.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPaperPlane as farPaperPlane } from '@fortawesome/free-regular-svg-icons';
+
 
 const API_BASE_URL = 'https://community-api.tapie.kr';
 
@@ -89,9 +92,7 @@ const BoardWrite = () => {
           </div>
           {error && <p className="error-message">{error}</p>}
           <button type="submit" className="submit-button">
-            <svg className="button-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l.649-.186.936-2.428 1.498 1.498 1.054-.367L10 15.688l-1.895-.895 2.146-5.596 1.502 1.502.936-2.428.649-.186a1 1 0 001.169 1.409l-7 14z"></path>
-            </svg>
+            <FontAwesomeIcon icon={farPaperPlane} />
             등록하기
           </button>
         </form>

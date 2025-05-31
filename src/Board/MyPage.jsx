@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../Auth/AuthContext';
 import './MyPage.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
+
 
 const API_BASE_URL = 'https://community-api.tapie.kr';
 
@@ -139,14 +142,14 @@ const MyPage = ({ setPage, setSelectedPostId }) => {
                 <button
                   onClick={(e) => handleEditClick(e, post.id)}
                   className="mypage-action-btn mypage-edit-btn"
-                  title="수정"
                 >
+                  <FontAwesomeIcon icon={faPenToSquare} /> 
                 </button>
                 <button
                   onClick={(e) => handleDeleteClick(e, post.id)}
                   className="mypage-action-btn mypage-delete-btn"
-                  title="삭제"
                 >
+                  <FontAwesomeIcon icon={faTrash} /> 
                 </button>
               </div>
             </div>
