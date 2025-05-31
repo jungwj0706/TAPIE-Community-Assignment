@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }) => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
-        credentials: 'include', // **필수**
+        credentials: 'include',
       });
 
       if (response.ok) {
@@ -54,7 +54,7 @@ export const AuthProvider = ({ children }) => {
         setLoggedInUser({ 
           id: userData.id, 
           username: userData.username, 
-          nickname: userData.nickname || userData.username // 서버 응답 필드명 확인
+          nickname: userData.nickname || userData.username
         }); 
         navigate('/');
         return { success: true };
@@ -74,7 +74,7 @@ export const AuthProvider = ({ children }) => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, nickname, password }),
-        credentials: 'include', // **필수**
+        credentials: 'include',
       });
 
       if (response.ok) {
@@ -93,7 +93,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await fetch(`${API_BASE_URL}/auth/logout`, {
         method: 'POST',
-        credentials: 'include', // **필수**
+        credentials: 'include',
       });
       if (response.ok) {
         setLoggedInUser(null);
