@@ -1,49 +1,41 @@
-/* src/Board/BoardEdit.css */
-
-/* 전체 페이지 컨테이너: 배경 흰색 */
 .board-page-container {
     display: flex;
-    justify-content: center; /* 중앙 정렬 */
-    align-items: flex-start; /* 상단에서 시작 */
-    padding: 40px 20px; /* 상하 여백 */
-    min-height: calc(100vh - 60px); /* 헤더 높이(60px 가정)를 제외한 나머지 높이 */
-    background-color: #ffffff; /* 순수 흰색 배경 */
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 20px;
+    min-height: calc(100vh - 60px);
+    background-color: #ffffff;
     box-sizing: border-box;
 }
 
-/* 글 작성/수정 카드 (스크린샷의 흰색 박스) */
 .board-form-card {
-    background-color: #ffffff; /* 카드 배경도 흰색 */
+    background-color: #ffffff;
     padding: 40px;
-    border-radius: 8px; /* 스크린샷과 유사한 둥근 모서리 */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* 부드러운 그림자 */
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     width: 100%;
-    max-width: 600px; /* 스크린샷과 유사한 최대 너비 */
+    max-width: 600px;
     box-sizing: border-box;
-    border: 1px solid #eee; /* 아주 연한 테두리 */
+    border: 1px solid #eee;
 }
 
-/* 카드 내 타이틀 (글 수정) */
 .card-title {
     font-size: 24px;
     font-weight: bold;
-    color: #333333; /* 진한 회색 글자 */
+    color: #333333;
     margin-bottom: 30px;
-    text-align: left; /* 스크린샷처럼 왼쪽 정렬 */
+    text-align: left;
 }
 
-/* 폼 스타일 */
 .board-entry-form {
     display: flex;
     flex-direction: column;
 }
 
-/* 폼 그룹 (제목, 내용 각 필드) */
 .form-group {
-    margin-bottom: 25px; /* 필드 간 간격 */
+    margin-bottom: 25px;
 }
 
-/* 라벨 숨김 (플레이스홀더 사용) */
 .form-label-hidden {
     position: absolute;
     width: 1px;
@@ -56,30 +48,28 @@
     border: 0;
 }
 
-/* 입력 필드 (제목) */
 .form-input-field {
     width: 100%;
     padding: 14px 16px;
-    border: 1px solid #dddddd; /* 연한 회색 테두리 */
-    border-radius: 4px; /* 살짝 둥근 모서리 */
+    border: 1px solid #dddddd;
+    border-radius: 4px;
     font-size: 16px;
-    color: #333333; /* 입력 글자색 */
-    background-color: #f8f8f8; /* 배경색 */
+    color: #333333;
+    background-color: #f8f8f8;
     box-sizing: border-box;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .form-input-field::placeholder {
-    color: #aaaaaa; /* 플레이스홀더 색상 */
+    color: #aaaaaa;
 }
 
 .form-input-field:focus {
-    border-color: #000000; /* 포커스 시 검은색 테두리 */
-    box-shadow: 0 0 0 1px #000000; /* 포커스 시 얇은 검은색 그림자 */
-    outline: none; /* 기본 아웃라인 제거 */
+    border-color: #000000;
+    box-shadow: 0 0 0 1px #000000;
+    outline: none;
 }
 
-/* 텍스트 영역 (내용) */
 .form-textarea-field {
     width: 100%;
     padding: 14px 16px;
@@ -88,10 +78,10 @@
     font-size: 16px;
     color: #333333;
     background-color: #f8f8f8;
-    min-height: 200px; /* 충분한 높이 */
-    resize: vertical; /* 세로로만 크기 조절 가능 */
+    min-height: 200px;
+    resize: vertical;
     box-sizing: border-box;
-    line-height: 1.5; /* 줄 간격 */
+    line-height: 1.5;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -105,12 +95,11 @@
     outline: none;
 }
 
-/* 제출 버튼 */
 .form-submit-button {
     width: 100%;
     padding: 15px 25px;
-    background-color: #000000; /* 검은색 배경 */
-    color: #ffffff; /* 흰색 글자 */
+    background-color: #000000;
+    color: #ffffff;
     border: none;
     border-radius: 4px;
     font-size: 18px;
@@ -120,49 +109,46 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px; /* 아이콘과 텍스트 사이 간격 */
+    gap: 8px;
 }
 
 .form-submit-button:hover {
-    background-color: #333333; /* 호버 시 약간 밝은 검은색 */
-    transform: translateY(-1px); /* 약간 위로 떠오르는 효과 */
+    background-color: #333333;
+    transform: translateY(-1px);
 }
 
 .form-submit-button:active {
     transform: translateY(0);
 }
 
-/* 버튼 아이콘 (SVG 아이콘) */
 .button-icon {
     width: 20px;
     height: 20px;
     vertical-align: middle;
 }
 
-/* 폼 내 에러 메시지 */
 .form-error-message {
-    color: #d9534f; /* 붉은색 에러 메시지 */
+    color: #d9534f;
     font-size: 14px;
-    margin-top: -15px; /* 폼 요소와의 간격 조정 */
+    margin-top: -15px;
     margin-bottom: 20px;
     text-align: center;
 }
 
-/* 로딩, 에러, 권한 없음 메시지 (BoardEdit.jsx에서 사용) */
 .centered-message {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: calc(100vh - 60px); /* 헤더 높이 제외 */
+    min-height: calc(100vh - 60px);
     font-size: 18px;
-    color: #333333; /* 글자색 검은색 */
-    background-color: #ffffff; /* 배경 흰색 */
+    color: #333333;
+    background-color: #ffffff;
     text-align: center;
     padding: 20px;
     box-sizing: border-box;
 }
 
 .error-message-text {
-    color: #d9534f; /* 에러 메시지는 붉은색으로 강조 */
+    color: #d9534f;
     font-weight: bold;
 }

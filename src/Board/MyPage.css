@@ -3,8 +3,7 @@
   margin-left: auto;
   margin-right: auto;
   padding: 1.5rem;
-  background-color: #000; 
-  min-height: calc(100vh - 100px - 32px);
+  background-color: black; 
   border-radius: 0.5rem;
 }
 
@@ -59,11 +58,9 @@
   background-color: #1f2937;
   padding: 1.25rem;
   border-radius: 0; 
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
   transform: scale(1);
   transition: all 0.3s ease;
   cursor: pointer;
-  border: 1px solid #374151;
   position: relative;
   text-align: left;
   overflow: hidden;
